@@ -525,7 +525,7 @@ export abstract class Session extends EventEmitter {
                   let tone: string | undefined;
                   let duration: number | undefined;
 
-                  const regTone = /^(Signal\s*?=\s*?)([0-9A-D#*]{1})(\s)?.*/;
+                  const regTone = /^(Signal\s*?=\s*?)([0-9A-D#*+]{1})(\s)?.*/;
                   if (regTone.test(body[0])) {
                     tone = body[0].replace(regTone, "$2");
                   }
