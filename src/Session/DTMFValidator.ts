@@ -10,7 +10,7 @@ export class DTMFValidator {
     } else {
       DTMFValidator.generateInvalidToneError(tone);
     }
-    const regex = moreThanOneTone ? /^[0-9A-D#*,]+$/i : /^[0-9A-D#*]$/i;
+    const regex = moreThanOneTone ? /^[+0-9A-D#*,]+$/i : /^[+0-9A-D#*]$/i;
     // Check tone value
     if (!tone.match(regex)) {
       DTMFValidator.generateInvalidToneError(tone);
