@@ -231,7 +231,7 @@ export class SessionDescriptionHandler extends EventEmitter implements SessionDe
     if (!(/a=(sendrecv|sendonly|recvonly|inactive)/).test(description.sdp)) {
       description.sdp = description.sdp.replace(/(m=[^\r]*\r\n)/g, "$1a=sendonly\r\n");
     } else {
-      description.sdp = description.sdp.replace(/a=sendrecv\r\n/g, "a=sendonly\r\n");
+      // description.sdp = description.sdp.replace(/a=sendrecv\r\n/g, "a=sendonly\r\n");
       description.sdp = description.sdp.replace(/a=recvonly\r\n/g, "a=inactive\r\n");
     }
     return Promise.resolve(description);
