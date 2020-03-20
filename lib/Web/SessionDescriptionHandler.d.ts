@@ -68,7 +68,8 @@ export declare class SessionDescriptionHandler extends EventEmitter implements S
     holdModifier(description: RTCSessionDescriptionInit): Promise<RTCSessionDescriptionInit>;
     /**
      * Set the remote description to the underlying media implementation
-     * @param {String} sessionDescription The description provided by a SIP message to be set on the media implementation
+     * @param {String} sessionDescription The description provided by a SIP message to be set on the media
+     * implementation
      * @param {Object} [options] Options object to be used by getDescription
      * @param {MediaStreamConstraints} [options.constraints] MediaStreamConstraints
      *   https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints
