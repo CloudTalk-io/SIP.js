@@ -72,7 +72,7 @@ export declare class SimpleUser {
      */
     unregister(registererUnregisterOptions?: RegistererUnregisterOptions): Promise<void>;
     /**
-     * Make an outoing call.
+     * Make an outgoing call.
      * @remarks
      * Send an INVITE request to create a new Session.
      * Resolves when the INVITE request is sent, otherwise rejects.

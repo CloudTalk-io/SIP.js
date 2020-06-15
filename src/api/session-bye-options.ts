@@ -1,10 +1,10 @@
 import { OutgoingRequestDelegate, RequestOptions } from "../core";
 
 /**
- * Options for {@link Byer.bye}.
+ * Options for {@link Session.bye}.
  * @public
  */
-export interface ByerByeOptions {
+export interface SessionByeOptions {
   /** See `core` API. */
   requestDelegate?: OutgoingRequestDelegate;
   /** See `core` API. */

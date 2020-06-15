@@ -1,4 +1,4 @@
-import { Body, IncomingRequestMessage, IncomingResponseMessage, OutgoingAckRequest, OutgoingByeRequest, OutgoingInfoRequest, OutgoingInviteRequest, OutgoingInviteRequestDelegate, OutgoingNotifyRequest, OutgoingPrackRequest, OutgoingReferRequest, OutgoingRequestDelegate, OutgoingRequestMessage, RequestOptions } from "../messages";
+import { Body, IncomingRequestMessage, IncomingResponseMessage, OutgoingAckRequest, OutgoingByeRequest, OutgoingInfoRequest, OutgoingInviteRequest, OutgoingInviteRequestDelegate, OutgoingMessageRequest, OutgoingNotifyRequest, OutgoingPrackRequest, OutgoingReferRequest, OutgoingRequestDelegate, OutgoingRequestMessage, RequestOptions } from "../messages";
 import { Session, SessionDelegate, SessionState, SignalingState } from "../session";
 import { InviteClientTransaction, InviteServerTransaction } from "../transactions";
 import { UserAgentCore } from "../user-agent-core";
@@ -132,6 +132,14 @@ export declare class SessionDialog extends Dialog implements Session {
      * @param options - Options bucket
      */
     invite(delegate?: OutgoingInviteRequestDelegate, options?: RequestOptions): OutgoingInviteRequest;
+    /**
+     * A UAC MAY associate a MESSAGE request with an existing dialog.  If a
+     * MESSAGE request is sent within a dialog, it is "associated" with any
+     * media session or sessions associated with that dialog.
+     * https://tools.ietf.org/html/rfc3428#section-4
+     * @param options - Options bucket.
+     */
+    message(delegate: OutgoingRequestDelegate, options?: RequestOptions): OutgoingMessageRequest;
     /**
      * The NOTIFY mechanism defined in [2] MUST be used to inform the agent
      * sending the REFER of the status of the reference.

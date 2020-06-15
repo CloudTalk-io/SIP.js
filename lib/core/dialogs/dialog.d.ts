@@ -141,6 +141,13 @@ export declare class Dialog {
         body?: Body;
     }): OutgoingRequestMessage;
     /**
+     * Increment the local sequence number by one.
+     * It feels like this should be protected, but the current authentication handling currently
+     * needs this to keep the dialog in sync when "auto re-sends" request messages.
+     * @internal
+     */
+    incrementLocalSequenceNumber(): void;
+    /**
      * If the remote sequence number was not empty, but the sequence number
      * of the request is lower than the remote sequence number, the request
      * is out of order and MUST be rejected with a 500 (Server Internal

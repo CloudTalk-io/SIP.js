@@ -1,3 +1,4 @@
+import { Dialog } from "../dialogs";
 import { TransportError } from "../exceptions";
 import { Logger, LoggerFactory } from "../log";
 import { IncomingResponseMessage, OutgoingRequest, OutgoingRequestDelegate, OutgoingRequestMessage, RequestOptions } from "../messages";
@@ -60,10 +61,11 @@ export declare class UserAgentClient implements OutgoingRequest {
      * FIXME: This "guard for and retry the request with credentials"
      * implementation is not complete and at best minimally passable.
      * @param response - The incoming response to guard.
+     * @param dialog - If defined, the dialog within which the response was received.
      * @returns True if the program execution is to continue in the branch in question.
      *          Otherwise the request is retried with credentials and current request processing must stop.
      */
-    protected authenticationGuard(message: IncomingResponseMessage): boolean;
+    protected authenticationGuard(message: IncomingResponseMessage, dialog?: Dialog): boolean;
     /**
      * 8.1.3.1 Transaction Layer Errors
      * In some cases, the response returned by the transaction layer will

@@ -16,7 +16,7 @@ export interface SimpleUserMedia {
     remote?: SimpleUserMediaRemote;
 }
 /**
- * Contraints for {@link SimpleUserMedia}.
+ * Constraints for {@link SimpleUserMedia}.
  * @public
  */
 export interface SimpleUserMediaConstraints {

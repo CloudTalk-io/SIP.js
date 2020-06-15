@@ -1,13 +1,17 @@
-import { AckableIncomingResponseWithSession, Body, IncomingAckRequest, IncomingByeRequest, IncomingInfoRequest, IncomingInviteRequest, IncomingNotifyRequest, IncomingPrackRequest, IncomingReferRequest, Logger, NameAddrHeader, OutgoingByeRequest, OutgoingInviteRequest, OutgoingRequestDelegate, RequestOptions, Session as SessionDialog } from "../core";
+import { AckableIncomingResponseWithSession, Body, IncomingAckRequest, IncomingByeRequest, IncomingInfoRequest, IncomingInviteRequest, IncomingMessageRequest, IncomingNotifyRequest, IncomingPrackRequest, IncomingReferRequest, Logger, NameAddrHeader, OutgoingByeRequest, OutgoingInfoRequest, OutgoingInviteRequest, OutgoingMessageRequest, OutgoingReferRequest, OutgoingRequestDelegate, RequestOptions, Session as SessionDialog, URI } from "../core";
 import { Emitter } from "./emitter";
 import { Inviter } from "./inviter";
 import { InviterOptions } from "./inviter-options";
-import { Referrer } from "./referrer";
+import { Notification } from "./notification";
+import { SessionByeOptions } from "./session-bye-options";
 import { SessionDelegate } from "./session-delegate";
 import { SessionDescriptionHandler, SessionDescriptionHandlerModifier, SessionDescriptionHandlerOptions } from "./session-description-handler";
 import { SessionDescriptionHandlerFactory } from "./session-description-handler-factory";
+import { SessionInfoOptions } from "./session-info-options";
 import { SessionInviteOptions } from "./session-invite-options";
+import { SessionMessageOptions } from "./session-message-options";
 import { SessionOptions } from "./session-options";
+import { SessionReferOptions } from "./session-refer-options";
 import { SessionState } from "./session-state";
 import { UserAgent } from "./user-agent";
 /**
@@ -42,8 +46,6 @@ export declare abstract class Session {
     /** @internal */
     _referral: Inviter | undefined;
     /** @internal */
-    _referrer: Referrer | undefined;
-    /** @internal */
     _replacee: Session | undefined;
     /**
      * Logger.
@@ -65,6 +67,8 @@ export declare abstract class Session {
     protected _sessionDescriptionHandlerModifiers: Array<SessionDescriptionHandlerModifier> | undefined;
     /** @internal */
     protected _sessionDescriptionHandlerOptions: SessionDescriptionHandlerOptions | undefined;
+    /** If defined, NOTIFYs associated with a REFER subscription are delivered here. */
+    private onNotify;
     /** True if there is a re-INVITE request outstanding. */
     private pendingReinvite;
     /** Dialogs session description handler. */
@@ -130,18 +134,31 @@ export declare abstract class Session {
      */
     readonly userAgent: UserAgent;
     /**
+     * End the {@link Session}. Sends a BYE.
+     * @param options - Options bucket. See {@link SessionByeOptions} for details.
+     */
+    bye(options?: SessionByeOptions): Promise<OutgoingByeRequest>;
+    /**
+     * Share {@link Info} with peer. Sends an INFO.
+     * @param options - Options bucket. See {@link SessionInfoOptions} for details.
+     */
+    info(options?: SessionInfoOptions): Promise<OutgoingInfoRequest>;
+    /**
      * Renegotiate the session. Sends a re-INVITE.
-     * @param options - Options bucket.
+     * @param options - Options bucket. See {@link SessionInviteOptions} for details.
      */
     invite(options?: SessionInviteOptions): Promise<OutgoingInviteRequest>;
     /**
-     * Send REFER.
-     * @param referrer - Referrer.
-     * @param delegate - Request delegate.
-     * @param options - Request options bucket.
-     * @internal
+     * Deliver a {@link Message}. Sends a MESSAGE.
+     * @param options - Options bucket. See {@link SessionMessageOptions} for details.
      */
-    refer(referrer: Referrer, delegate?: OutgoingRequestDelegate, options?: RequestOptions): Promise<OutgoingByeRequest>;
+    message(options?: SessionMessageOptions): Promise<OutgoingMessageRequest>;
+    /**
+     * Proffer a {@link Referral}. Send a REFER.
+     * @param referTo - The referral target. If a `Session`, a REFER w/Replaces is sent.
+     * @param options - Options bucket. See {@link SessionReferOptions} for details.
+     */
+    refer(referTo: URI | Session, options?: SessionReferOptions): Promise<OutgoingReferRequest>;
     /**
      * Send BYE.
      * @param delegate - Request delegate.
@@ -155,7 +172,22 @@ export declare abstract class Session {
      * @param options - Request options bucket.
      * @internal
      */
-    _info(delegate?: OutgoingRequestDelegate, options?: RequestOptions): Promise<OutgoingByeRequest>;
+    _info(delegate?: OutgoingRequestDelegate, options?: RequestOptions): Promise<OutgoingInfoRequest>;
+    /**
+     * Send MESSAGE.
+     * @param delegate - Request delegate.
+     * @param options - Request options bucket.
+     * @internal
+     */
+    _message(delegate?: OutgoingRequestDelegate, options?: RequestOptions): Promise<OutgoingMessageRequest>;
+    /**
+     * Send REFER.
+     * @param onNotify - Notification callback.
+     * @param delegate - Request delegate.
+     * @param options - Request options bucket.
+     * @internal
+     */
+    _refer(onNotify?: (notification: Notification) => void, delegate?: OutgoingRequestDelegate, options?: RequestOptions): Promise<OutgoingByeRequest>;
     /**
      * Send ACK and then BYE. There are unrecoverable errors which can occur
      * while handling dialog forming and in-dialog INVITE responses and when
@@ -189,6 +221,11 @@ export declare abstract class Session {
      * @internal
      */
     protected onInviteRequest(request: IncomingInviteRequest): void;
+    /**
+     * Handle in dialog MESSAGE request.
+     * @internal
+     */
+    protected onMessageRequest(request: IncomingMessageRequest): void;
     /**
      * Handle in dialog NOTIFY request.
      * @internal
@@ -269,6 +306,9 @@ export declare abstract class Session {
      * @internal
      */
     protected stateTransition(newState: SessionState): void;
+    private copyRequestOptions;
     private getReasonHeaderValue;
+    private referExtraHeaders;
+    private referToString;
 }
 //# sourceMappingURL=session.d.ts.map

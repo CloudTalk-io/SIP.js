@@ -9,7 +9,7 @@ import { UserAgentClient } from "./user-agent-client";
  * https://tools.ietf.org/html/rfc6665#section-4.1
  *
  * User agent client for installation of a single subscription per SUBSCRIBE request.
- * TODO: Support for installation of multiple subscriptions on forked SUBSCRIBE reqeuests.
+ * TODO: Support for installation of multiple subscriptions on forked SUBSCRIBE requests.
  * @public
  */
 export declare class SubscribeUserAgentClient extends UserAgentClient implements OutgoingSubscribeRequest {
@@ -40,7 +40,7 @@ export declare class SubscribeUserAgentClient extends UserAgentClient implements
      */
     dispose(): void;
     /**
-     * Handle out of dialog NOTIFY assoicated with SUBSCRIBE request.
+     * Handle out of dialog NOTIFY associated with SUBSCRIBE request.
      * This is the first NOTIFY received after the SUBSCRIBE request.
      * @param uas - User agent server handling the subscription creating NOTIFY.
      */

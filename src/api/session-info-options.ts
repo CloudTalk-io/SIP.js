@@ -1,10 +1,10 @@
 import { OutgoingRequestDelegate, RequestOptions } from "../core";
 
 /**
- * Options for {@link Infoer.info}.
+ * Options for {@link Session.info}.
  * @public
  */
-export interface InfoerInfoOptions {
+export interface SessionInfoOptions {
   /** See `core` API. */
   requestDelegate?: OutgoingRequestDelegate;
   /** See `core` API. */

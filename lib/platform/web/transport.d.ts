@@ -29,7 +29,7 @@ export interface TransportOptions {
      */
     keepAliveDebounce?: number;
     /**
-     * If true, messsages sent and received by the transport are logged.
+     * If true, messages sent and received by the transport are logged.
      * @defaultValue `true`
      */
     traceSip?: boolean;

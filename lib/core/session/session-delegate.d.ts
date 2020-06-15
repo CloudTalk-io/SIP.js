@@ -1,4 +1,4 @@
-import { IncomingAckRequest, IncomingByeRequest, IncomingInfoRequest, IncomingInviteRequest, IncomingNotifyRequest, IncomingPrackRequest, IncomingReferRequest } from "../messages";
+import { IncomingAckRequest, IncomingByeRequest, IncomingInfoRequest, IncomingInviteRequest, IncomingMessageRequest, IncomingNotifyRequest, IncomingPrackRequest, IncomingReferRequest } from "../messages";
 /**
  * Session delegate.
  * @public
@@ -32,6 +32,12 @@ export interface SessionDelegate {
      * @param request - Incoming INVITE request.
      */
     onInvite?(request: IncomingInviteRequest): void;
+    /**
+     * Receive MESSAGE request.
+     * https://tools.ietf.org/html/rfc3428#section-7
+     * @param request - Incoming MESSAGE request.
+     */
+    onMessage?(request: IncomingMessageRequest): void;
     /**
      * Receive NOTIFY request.
      * https://tools.ietf.org/html/rfc6665#section-4.1.3

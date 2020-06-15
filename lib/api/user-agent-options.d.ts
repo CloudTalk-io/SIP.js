@@ -34,11 +34,6 @@ export interface UserAgentOptions {
      */
     allowLegacyNotifications?: boolean;
     /**
-     * If `true`, the user agent will accept out of dialog REFER.
-     * @defaultValue `false`
-     */
-    allowOutOfDialogRefers?: boolean;
-    /**
      * Authorization password.
      * @defaultValue `""`
      */

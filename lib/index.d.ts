@@ -25,7 +25,7 @@ export { makeUserAgentCoreConfigurationFromUA, UA } from "./UA";
 export { Utils } from "./Utils";
 import * as Web from "./Web/index";
 export { Web };
-declare const version = "0.15.10";
+declare const version = "0.15.11";
 declare const name = "sip.js";
 export { name, version };
 import * as Core from "./core/index";

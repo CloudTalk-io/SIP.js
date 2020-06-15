@@ -1,5 +1,5 @@
 export declare namespace C {
-    const version = "0.15.10";
+    const version = "0.15.11";
     const USER_AGENT: string;
     const SIP = "sip";
     const SIPS = "sips";

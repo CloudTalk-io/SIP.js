@@ -11,6 +11,7 @@ import {
   Grammar,
   IncomingAckRequest,
   IncomingInviteRequest,
+  IncomingMessageRequest,
   IncomingPrackRequest,
   IncomingRequest,
   IncomingRequestMessage,
@@ -201,7 +202,7 @@ export abstract class Session extends EventEmitter {
       const tonesArray: Array<string> = tones.split("");
       while (tonesArray.length > 0) { dtmfs.push(new DTMF(this, tonesArray.shift() as string, options)); }
 
-      if (this.tones) {
+      if (Array.isArray(this.tones) && this.tones.length) {
         // Tones are already queued, just add to the queue
         this.tones =  this.tones.concat(dtmfs);
         return this;
@@ -287,6 +288,9 @@ export abstract class Session extends EventEmitter {
         break;
       case C.INVITE:
         request = this.session.invite(delegate, requestOptions);
+        break;
+      case C.MESSAGE:
+        request = this.session.message(delegate, requestOptions);
         break;
       case C.REFER:
         request = this.session.refer(delegate, requestOptions);
@@ -577,6 +581,10 @@ export abstract class Session extends EventEmitter {
         }
         incomingRequest.accept();
         this.emit("notify", incomingRequest.message);
+        break;
+      case C.MESSAGE:
+        incomingRequest.accept();
+        this.emit("message", incomingRequest.message);
         break;
     }
   }
@@ -1042,9 +1050,10 @@ export class InviteServerContext extends Session implements ServerContext {
           onBye: (byeRequest): void => this.receiveRequest(byeRequest),
           onInfo: (infoRequest): void => this.receiveRequest(infoRequest),
           onInvite: (inviteRequest): void => this.receiveRequest(inviteRequest),
+          onMessage: (messageRequest): void => this.receiveRequest(messageRequest),
           onNotify: (notifyRequest): void => this.receiveRequest(notifyRequest),
           onPrack: (prackRequest): void => this.receiveRequest(prackRequest),
-          onRefer: (referRequest): void => this.receiveRequest(referRequest)
+          onRefer: (referRequest): void => this.receiveRequest(referRequest),
         };
         this.session = session;
         this.status = SessionStatus.STATUS_WAITING_FOR_ACK;
@@ -2360,9 +2369,10 @@ export class InviteClientContext extends Session implements ClientContext {
       onBye: (byeRequest): void => this.receiveRequest(byeRequest),
       onInfo: (infoRequest): void => this.receiveRequest(infoRequest),
       onInvite: (inviteRequest): void => this.receiveRequest(inviteRequest),
+      onMessage: (messageRequest): void => this.receiveRequest(messageRequest),
       onNotify: (notifyRequest): void => this.receiveRequest(notifyRequest),
       onPrack: (prackRequest): void => this.receiveRequest(prackRequest),
-      onRefer: (referRequest): void => this.receiveRequest(referRequest)
+      onRefer: (referRequest): void => this.receiveRequest(referRequest),
     };
 
     switch (session.signalingState) {

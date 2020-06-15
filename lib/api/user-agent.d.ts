@@ -69,7 +69,6 @@ export declare class UserAgent {
     private _contact;
     private _state;
     private _stateEventEmitter;
-    private _stateInitial;
     private _transport;
     private _userAgentCore;
     /** Logger. */

@@ -62,6 +62,7 @@ export declare class Registerer {
     register(options?: RegistererRegisterOptions): Promise<OutgoingRegisterRequest>;
     /**
      * Sends the REGISTER request with expires equal to zero.
+     * @remarks
      * Rejects with `RequestPendingError` if a REGISTER request is already in progress.
      */
     unregister(options?: RegistererUnregisterOptions): Promise<OutgoingRegisterRequest>;
@@ -97,5 +98,7 @@ export declare class Registerer {
      * Toggle waiting.
      */
     private waitingToggle;
+    /** Hopefully helpful as the standard behavior has been found to be unexpected. */
+    private waitingWarning;
 }
 //# sourceMappingURL=registerer.d.ts.map
