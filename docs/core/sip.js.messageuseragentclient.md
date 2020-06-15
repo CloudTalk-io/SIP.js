@@ -4,7 +4,7 @@
 
 ## MessageUserAgentClient class
 
-MESSAGE UAC.
+MESSAGE UAS.
 
 <b>Signature:</b>
 

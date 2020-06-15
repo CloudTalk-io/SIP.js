@@ -14655,7 +14655,8 @@ var Session = /** @class */ (function (_super) {
                                 if (body.length === 2) {
                                     var tone = void 0;
                                     var duration = void 0;
-                                    var regTone = /^(Signal\s*?=\s*?)([0-9A-D#*]{1})(\s)?.*/;
+                                    // CloudTalk Customization -> added + to regex of allowed tones
+                                    var regTone = /^(Signal\s*?=\s*?)([0-9A-D#*+]{1})(\s)?.*/;
                                     if (regTone.test(body[0])) {
                                         tone = body[0].replace(regTone, "$2");
                                     }
@@ -18573,7 +18574,8 @@ var SessionDescriptionHandler = /** @class */ (function (_super) {
     };
     /**
      * Set the remote description to the underlying media implementation
-     * @param {String} sessionDescription The description provided by a SIP message to be set on the media implementation
+     * @param {String} sessionDescription The description provided by a SIP message to be set on the media
+     * implementation
      * @param {Object} [options] Options object to be used by getDescription
      * @param {MediaStreamConstraints} [options.constraints] MediaStreamConstraints
      *   https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints
@@ -18691,7 +18693,9 @@ var SessionDescriptionHandler = /** @class */ (function (_super) {
     SessionDescriptionHandler.prototype.getDirection = function () {
         return this.direction;
     };
-    SessionDescriptionHandler.prototype.on = function (name, callback) { return _super.prototype.on.call(this, name, callback); };
+    SessionDescriptionHandler.prototype.on = function (name, callback) {
+        return _super.prototype.on.call(this, name, callback);
+    };
     SessionDescriptionHandler.prototype.getMediaStream = function (constraints) {
         return navigator.mediaDevices.getUserMedia(constraints);
     };

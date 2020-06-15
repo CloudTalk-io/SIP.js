@@ -45,7 +45,6 @@ export class SimpleUser {
 export interface SimpleUserDelegate {
     onCallAnswered?(): void;
     onCallCreated?(): void;
-    onCallDTMFReceived?(tone: string, duration: number): void;
     onCallHangup?(): void;
     onCallHold?(held: boolean): void;
     onCallReceived?(): void;

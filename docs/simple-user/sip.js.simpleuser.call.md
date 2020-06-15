@@ -4,7 +4,7 @@
 
 ## SimpleUser.call() method
 
-Make an outgoing call.
+Make an outoing call.
 
 <b>Signature:</b>
 

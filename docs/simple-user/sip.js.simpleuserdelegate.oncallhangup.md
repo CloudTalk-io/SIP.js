@@ -4,7 +4,7 @@
 
 ## SimpleUserDelegate.onCallHangup() method
 
-Called when a call is hung up.
+Called when a call is hungup.
 
 <b>Signature:</b>
 

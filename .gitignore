@@ -1,9 +1,9 @@
 _SpecRunner.html
 npm-debug.log
 node_modules/
+.idea
+.vscode
 dist/
-lib/
-src/Grammar/dist/*
 src/**/*.js
 temp/
 test/spec/*.spec.js

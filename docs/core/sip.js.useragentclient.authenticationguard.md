@@ -11,7 +11,7 @@ FIXME: This "guard for and retry the request with credentials" implementation is
 <b>Signature:</b>
 
 ```typescript
-protected authenticationGuard(message: IncomingResponseMessage, dialog?: Dialog): boolean;
+protected authenticationGuard(message: IncomingResponseMessage): boolean;
 ```
 
 ## Parameters
@@ -19,7 +19,6 @@ protected authenticationGuard(message: IncomingResponseMessage, dialog?: Dialog)
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  message | <code>IncomingResponseMessage</code> |  |
-|  dialog | <code>Dialog</code> | If defined, the dialog within which the response was received. |
 
 <b>Returns:</b>
 
