@@ -3,7 +3,6 @@ npm-debug.log
 node_modules/
 .idea
 .vscode
-dist/
 src/**/*.js
 temp/
 test/spec/*.spec.js

@@ -58,6 +58,8 @@ export abstract class Transport extends EventEmitter implements CoreTransport {
       if (!data.overrideEvent) {
         this.emit("connected");
       }
+    }).catch((error: any) =>{
+      this.emit("transportError", error)
     });
   }
 
