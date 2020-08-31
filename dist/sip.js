@@ -21015,6 +21015,11 @@ var Transport = /** @class */ (function (_super) {
                 _this.stopSendingKeepAlives();
                 _this.logger.log("closing WebSocket " + _this.server.wsUri);
                 _this.ws.close(options.code, options.reason);
+                setTimeout(function () {
+                    if (_this.status === TransportStatus.STATUS_CLOSING) {
+                        _this.onClose({ code: options.code, reason: options.reason });
+                    }
+                }, 2000);
             }
             else {
                 reject("Attempted to disconnect but the websocket doesn't exist");
