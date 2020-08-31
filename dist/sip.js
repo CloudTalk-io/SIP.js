@@ -21019,7 +21019,8 @@ var Transport = /** @class */ (function (_super) {
                     if (_this.status === TransportStatus.STATUS_CLOSING) {
                         _this.onClose({ code: options.code, reason: options.reason });
                     }
-                }, 2000);
+                    _this.logger.log("force closing WebSocket due long timeout " + _this.server.wsUri);
+                }, _this.configuration.disconnectTimeout * 1000);
             }
             else {
                 reject("Attempted to disconnect but the websocket doesn't exist");
@@ -21458,6 +21459,7 @@ var Transport = /** @class */ (function (_super) {
             connectionTimeout: 5,
             maxReconnectionAttempts: 3,
             reconnectionTimeout: 4,
+            disconnectTimeout: 2,
             keepAliveInterval: 0,
             keepAliveDebounce: 10,
             // Logging
@@ -21618,6 +21620,14 @@ var Transport = /** @class */ (function (_super) {
                 reconnectionTimeout: function (reconnectionTimeout) {
                     if (Utils_1.Utils.isDecimal(reconnectionTimeout)) {
                         var value = Number(reconnectionTimeout);
+                        if (value > 0) {
+                            return value;
+                        }
+                    }
+                },
+                disconnectTimeout: function (disconnectTimeout) {
+                    if (Utils_1.Utils.isDecimal(disconnectTimeout)) {
+                        var value = Number(disconnectTimeout);
                         if (value > 0) {
                             return value;
                         }

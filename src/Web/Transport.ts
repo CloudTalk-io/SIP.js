@@ -24,6 +24,7 @@ export interface Configuration {
     connectionTimeout: number;
     maxReconnectionAttempts: number;
     reconnectionTimeout: number;
+    disconnectTimeout: number,
     keepAliveInterval: number;
     keepAliveDebounce: number;
     traceSip: boolean;
@@ -163,7 +164,8 @@ export class Transport extends TransportBase {
                     if (this.status === TransportStatus.STATUS_CLOSING) {
                         this.onClose({code: options.code, reason: options.reason});
                     }
-                }, 2000)
+                    this.logger.log("force closing WebSocket due long timeout " + this.server.wsUri);
+                }, this.configuration.disconnectTimeout * 1000)
             } else {
                 reject("Attempted to disconnect but the websocket doesn't exist");
             }
@@ -633,6 +635,7 @@ export class Transport extends TransportBase {
 
             maxReconnectionAttempts: 3,
             reconnectionTimeout: 4,
+            disconnectTimeout: 2,
 
             keepAliveInterval: 0,
             keepAliveDebounce: 10,
@@ -813,6 +816,15 @@ export class Transport extends TransportBase {
                         const value: number = Number(reconnectionTimeout);
                         if (value > 0) {
                             return value;
+                        }
+                    }
+                },
+
+                disconnectTimeout: (disconnectTimeout: string): number | undefined => {
+                    if (Utils.isDecimal(disconnectTimeout)) {
+                        const value: number = Number(disconnectTimeout);
+                        if (value > 0) {
+                            return value
                         }
                     }
                 }
