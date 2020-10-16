@@ -19,6 +19,7 @@ export interface Configuration {
     connectionTimeout: number;
     maxReconnectionAttempts: number;
     reconnectionTimeout: number;
+    disconnectTimeout: number;
     keepAliveInterval: number;
     keepAliveDebounce: number;
     traceSip: boolean;
